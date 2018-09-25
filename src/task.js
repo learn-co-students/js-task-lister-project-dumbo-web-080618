@@ -24,28 +24,25 @@ let Task = (function () {
       deleteButton.innerText = "X"
     h2.append(deleteButton)
     listDiv.append(div)
-    console.log(div)
 
-      deleteButton.addEventListener("click", () => {
-        this.delete()
+      deleteButton.addEventListener("click", (e) => {
+        Task.delete(e)
       })
 
   }
 
-  delete() {
-    let div = document.querySelector(`#taskid-${this.id}`)
-    div.parentNode.removeChild(div);
-    let self = all.find(function(el) {
-      return (el.id === this.id)
-    }.bind(this))
-      let idx = all.indexOf(self)
-      delete all[idx]
-      console.log(all.length)
-    if (all.length === 0){
-      tasklistform = document.querySelector("#create-task-form")
-      tasklistform.parentNode.removeChild(tasklistform)
-    }
-
+  static delete(e) {
+    let parent = e.target.parentNode.parentNode
+    let id = parseInt(parent.id.replace("taskid-", ''))
+    let currentTask = all.find(function(el) {
+      return (el.id === id)
+    })
+    let currentTaskIndex = all.indexOf(currentTask)
+    all.pop([currentTaskIndex])
+    parent.parentNode.removeChild(parent)
+    let form = document.querySelector("#create-task-form")
+    form.parentNode.removeChild(form)
+    TaskLister.renderForm()
   }
 
   }

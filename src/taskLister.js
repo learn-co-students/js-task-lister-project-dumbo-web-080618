@@ -68,11 +68,20 @@ let TaskLister = (function () {
 
       let taskUl = document.querySelector(`#taskid-${taskId}`).querySelector("ul")
         let li = document.createElement("li")
-        li.innerHTML = `Task: ${tasklist.name}` + '<br>' + `Priority: ${tasklist.priority}`
-      taskUl.append(li)
+        let deleteButton = document.createElement("button")
+          deleteButton.class = "delete-list"
+          deleteButton.innerText = "X"
+        li.innerHTML = `Task: ${tasklist.descrip}` + '<br>' + `Priority: ${tasklist.priority}`
+        li.append(deleteButton)
+        taskUl.append(li)
+
+        deleteButton.addEventListener("click", () => {
+          let parent = deleteButton.parentNode
+            all.pop(this)
+            parent.parentNode.removeChild(parent)
+        })
 
     }
-
 
 
 
